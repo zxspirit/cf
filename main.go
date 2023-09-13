@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/cloudflare/cloudflare-go"
+	"net"
 	"os"
 )
 
@@ -34,12 +35,20 @@ func main() {
 	//}()
 
 	//select {}
-	name, err := os.Hostname()
+	hostname, err := os.Hostname()
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println("无法获取主机名：", err)
 		return
 	}
-	fmt.Println(name)
+
+	ips, err := net.LookupHost(hostname)
+	if err != nil {
+		fmt.Println("无法获取域名：", err)
+		return
+	}
+
+	fmt.Println("主机名：", hostname)
+	fmt.Println("IP地址：", ips)
 }
 func Ddns(zoneName string, param DdnsParam) (cloudflare.DNSRecord, error) {
 	api, err := cloudflare.New(os.Getenv("CF_API_KEY"), os.Getenv("CF_API_EMAIL"))
