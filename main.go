@@ -17,23 +17,29 @@ type DdnsParam struct {
 }
 
 func main() {
-	go func() {
-		ddns, err := Ddns("newzhxu.com", DdnsParam{
-			Type:    "A",
-			Name:    "test.newzhxu.com",
-			Content: "1.2.3.4",
-			Comment: "test",
-			Ttl:     1,
-			Proxied: cloudflare.BoolPtr(false),
-		})
-		if err != nil {
-			fmt.Println(err)
-			return
-		}
-		fmt.Println(ddns)
-	}()
+	//go func() {
+	//	ddns, err := Ddns("newzhxu.com", DdnsParam{
+	//		Type:    "A",
+	//		Name:    "test.newzhxu.com",
+	//		Content: "1.2.3.4",
+	//		Comment: "test",
+	//		Ttl:     1,
+	//		Proxied: cloudflare.BoolPtr(false),
+	//	})
+	//	if err != nil {
+	//		fmt.Println(err)
+	//		return
+	//	}
+	//	fmt.Println(ddns)
+	//}()
 
-	select {}
+	//select {}
+	name, err := os.Hostname()
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	fmt.Println(name)
 }
 func Ddns(zoneName string, param DdnsParam) (cloudflare.DNSRecord, error) {
 	api, err := cloudflare.New(os.Getenv("CF_API_KEY"), os.Getenv("CF_API_EMAIL"))
