@@ -79,11 +79,10 @@ func (s *Server) Serve() {
 
 // NewServer 初始化Server模块的方法
 func NewServer(name string) ziface.IServer {
-	s := &Server{
+	return &Server{
 		Name:      name,
 		IPVersion: "tcp4",
 		IP:        "0.0.0.0",
 		Port:      8999,
 	}
-	return s
 }
